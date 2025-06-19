@@ -42,30 +42,25 @@ public class Main {
             opcao = lerInt("Escolha uma opção: ", 1, 6);
 
             switch (opcao) {
-                case 1:
-                    buscarNoticias();
-                    break;
-                case 2:
+                case 1 -> buscarNoticias();
+                case 2 -> {
                     exibirLista(usuario.getFavoritos(), "Favoritos");
                     menuEditarLista(usuario.getFavoritos(), "Favoritos");
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     exibirLista(usuario.getParaLerDepois(), "Para Ler Depois");
                     menuEditarLista(usuario.getParaLerDepois(), "Para Ler Depois");
-                    break;
-                case 4:
+                }
+                case 4 -> {
                     exibirLista(usuario.getLidas(), "Lidas");
                     menuEditarLista(usuario.getLidas(), "Lidas");
-                    break;
-                case 5:
-                    visualizarListasMenu();
-                    break;
-                case 6:
+                }
+                case 5 -> visualizarListasMenu();
+                case 6 -> {
                     JsonManager.salvar(usuario);
                     System.out.println("Saindo...");
-                    break;
-                default:
-                throw new IllegalArgumentException("Opção inválida: " + opcao);
+                }
+                default -> throw new IllegalArgumentException("Opção inválida: " + opcao);
             }
 
         } while (opcao != 6);
@@ -81,20 +76,20 @@ public class Main {
         System.out.println("4 - Voltar");
         op = lerInt("Escolha uma opção: ", 1, 4);
         switch (op) {
-          case 1:
-            exibirLista(usuario.getLidas(), "Lidas");
-            menuEditarLista(usuario.getLidas(), "Lidas");
-            break;
-          case 2:
-            exibirLista(usuario.getFavoritos(), "Favoritos");
-            menuEditarLista(usuario.getFavoritos(), "Favoritos");
-            break;
-          case 3:
-            exibirLista(usuario.getParaLerDepois(), "Para Ler Depois");
-            menuEditarLista(usuario.getParaLerDepois(), "Para Ler Depois");
-            break;
-          case 4:
-            break;
+          case 1 -> {
+              exibirLista(usuario.getLidas(), "Lidas");
+              menuEditarLista(usuario.getLidas(), "Lidas");
+              }
+          case 2 -> {
+              exibirLista(usuario.getFavoritos(), "Favoritos");
+              menuEditarLista(usuario.getFavoritos(), "Favoritos");
+              }
+          case 3 -> {
+              exibirLista(usuario.getParaLerDepois(), "Para Ler Depois");
+              menuEditarLista(usuario.getParaLerDepois(), "Para Ler Depois");
+              }
+          case 4 -> {
+              }
         }
       } while (op != 4);
     }
@@ -125,18 +120,16 @@ public class Main {
             opcao = lerInt("Escolha uma opção: ", 1, 4);
 
             switch (opcao) {
-                case 1:
-                    mostrarNoticias(noticias);
-                    break;
-                case 2:
+                case 1 -> mostrarNoticias(noticias);
+                case 2 -> {
                     String chave = lerTexto("Digite a palavra-chave: ").toLowerCase();
                     List<Noticia> filtradas = noticias.stream()
                             .filter(n -> n.getTitulo().toLowerCase().contains(chave) ||
                                     n.getIntroducao().toLowerCase().contains(chave))
                             .collect(Collectors.toList());
                     mostrarNoticias(filtradas);
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     LocalDate data = lerDataFlexivel("Digite a data: ");
                     if (data == null) {
                         System.out.println("Data inválida. Voltando ao menu.");
@@ -147,9 +140,9 @@ public class Main {
                                 .collect(Collectors.toList());
                         mostrarNoticias(porData);
                     }
-                    break;
-                case 4:
-                    break;
+                }
+                case 4 -> {
+                }
             }
         } while (opcao != 4);
     }
@@ -183,21 +176,21 @@ public class Main {
         int acao = lerInt("Escolha uma ação: ", 1, 4);
 
         switch (acao) {
-            case 1:
+            case 1 -> {
                 selecionada.marcarComoLida();
                 usuario.adicionarLida(selecionada);
                 System.out.println("Marcada como lida.");
-                break;
-            case 2:
+            }
+            case 2 -> {
                 usuario.adicionarFavorito(selecionada);
                 System.out.println("Adicionada aos favoritos.");
-                break;
-            case 3:
+            }
+            case 3 -> {
                 usuario.adicionarParaLerDepois(selecionada);
                 System.out.println("Adicionada na lista de 'Ler Depois'.");
-                break;
-            case 4:
-                break;
+            }
+            case 4 -> {
+            }
         }
     }
 
@@ -221,17 +214,11 @@ public class Main {
         Comparator<Noticia> comparator = null;
 
         switch (op) {
-            case 1:
-                comparator = Comparator.comparing(Noticia::getTitulo, String.CASE_INSENSITIVE_ORDER);
-                break;
-            case 2:
-                comparator = Comparator.comparing(Noticia::getDataPublicacao, Comparator.nullsLast(Comparator.naturalOrder()));
-                break;
-            case 3:
-                comparator = Comparator.comparing(Noticia::getTipo, String.CASE_INSENSITIVE_ORDER);
-                break;
-            case 4:
-                break;
+            case 1 -> comparator = Comparator.comparing(Noticia::getTitulo, String.CASE_INSENSITIVE_ORDER);
+            case 2 -> comparator = Comparator.comparing(Noticia::getDataPublicacao, Comparator.nullsLast(Comparator.naturalOrder()));
+            case 3 -> comparator = Comparator.comparing(Noticia::getTipo, String.CASE_INSENSITIVE_ORDER);
+            case 4 -> {
+            }
         }
 
         List<Noticia> ordenada = (comparator != null) ? lista.stream().sorted(comparator).toList() : lista;
